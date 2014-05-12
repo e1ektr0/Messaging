@@ -1,0 +1,30 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        New message:
+    </div>
+    <div class="panel-body">
+        <div class="row grid-item">
+            <label class="col-md-1">To:</label>
+            <div class="col-md-4" style="padding: 0">
+                <b ng-if="user.FirstName != null">{{user.FirstName}}</b>
+                <b ng-if="user.LastName != null">{{user.LastName}}</b>
+                <b ng-if="user.LastName == null && user.FirstName == null">{{user.Email}}</b>
+                < {{user.Email}} >
+            </div>
+        </div>
+        <form name="messageWriteForm">
+            <div class="row grid-item">
+                <label class="col-md-1">Subject:</label>
+                <input placeholder="Subject" type="text" name="subject" ng-model="message.subject" required class="col-md-4" />
+            </div>
+            <div class="row grid-item">
+                <label class="col-md-1">Content:</label> 
+                <textarea placeholder="Subject" name="message" ng-model="message.message" class="col-md-4"></textarea>
+            </div>
+            <div class="row">
+                <button type="submit" ng-click="send()" class="btn btn-primary col-md-offset-1">Send</button>
+                <button type="submit" ng-click="cancel()" class="btn btn-primary ">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

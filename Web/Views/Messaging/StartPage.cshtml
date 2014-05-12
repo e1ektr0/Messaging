@@ -1,0 +1,29 @@
+﻿<ul class="nav nav-pills" ng-controller="navigationController">
+    <li ng-class="{ active: isActive('/Messaging/Write')||isActive('/Messaging/Users')}"><a href="#/Messaging/Users">Compose</a></li>    
+    <li ng-class="{ active: isActive('/Messaging/Messages/Input')}"><a href="#/Messaging/Messages/Input">Inbox</a></li>
+    <li ng-class="{ active: isActive('/Messaging/Messages/Output')}"><a href="#/Messaging/Messages/Output">Sent</a></li>
+</ul>
+
+<div ng-controller="notificationController">
+
+</div>
+
+<div ng-controller="usersController" style="margin-top: 10px">
+    <div ng-view></div>
+</div>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/Angular")
+    @Scripts.Render("~/bundles/signalr")
+    <script src="signalR/hubs"></script>
+    <script src="~/app/services/usersService.js"></script>
+    <script src="~/app/services/messagesService.js"></script>
+    <script src="~/app/controllers/usersController.js"></script>
+    <script src="~/app/controllers/sendMessageController.js"></script>
+    <script src="~/app/controllers/readMessageController.js"></script>
+    <script src="~/app/controllers/messagesController.js"></script>
+    <script src="~/app/controllers/navigationController.js"></script>
+    <script src="~/app/controllers/notificationController.js"></script>
+    <script src="~/app/routing.js"></script>
+}

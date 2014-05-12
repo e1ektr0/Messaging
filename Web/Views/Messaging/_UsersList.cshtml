@@ -1,0 +1,25 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        Select user to compose the message:
+    </div>
+    <div class="panel-body without-tb-padding">
+        <div class="usersWrap" ng-repeat="user in users">
+            <div class="row border-box-item">
+                <div class="col-md-1">
+                    <img src="http://www.gravatar.com/avatar/ee?s=60&r=R&d=https://www.guardly.com/commonassets/images/img_profile_placeholder.png" width="60" height="60" />
+                </div>
+                <div class="col-md-3">
+                    <span ng-if="user.FirstName != null">{{user.FirstName}}</span>
+                    <span ng-if="user.LastName != null">{{user.LastName}}</span>
+                    <span ng-if="user.LastName == null && user.FirstName == null">{{user.Email}}</span>
+                </div>
+                <div class="col-md-3">
+                    < {{ user.Email }} >
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" ng-click="sendMessage(user.Id)" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

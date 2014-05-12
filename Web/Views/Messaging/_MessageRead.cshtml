@@ -1,0 +1,34 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        Message:
+    </div>
+    <div class="panel-body">
+        <div class="row grid-item">
+            <label class="col-md-1">From:</label>
+            <div class="col-md-4" style="padding: 0">
+                <b ng-if="message.SenderName != null">{{message.SenderName}}</b>
+                <b ng-if="message.SenderName == ' '">{{message.SenderEmail}}</b>
+                < {{message.SenderEmail}} >
+            </div>
+        </div>
+        <div class="row grid-item">
+            <label class="col-md-1">To:</label>
+            <div class="col-md-4" style="padding: 0">
+                <b ng-if="message.ReceiverName != null">{{message.ReceiverName}}</b>
+                <b ng-if="message.ReceiverName == ' '">{{message.ReceiverEmail}}</b>
+                < {{message.ReceiverEmail}} >
+            </div>
+        </div>
+        <div class="row grid-item">
+            <label class="col-md-1">Subject:</label>
+            <label class="col-md-11">{{message.Subject}}</label>
+        </div>
+        <div class="row grid-item">
+            <label class="col-md-1">Content:</label> 
+            <label class="col-md-11">{{message.Content}}</label>
+        </div>
+        <div class="row">
+            <button ng-click="back()" class="btn btn-primary col-md-offset-11">Back</button>
+        </div>
+    </div>
+</div>

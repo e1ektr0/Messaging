@@ -1,0 +1,14 @@
+﻿@using Web.HtmlHelpers
+@model Web.Models.ViewModel.EditFormModel
+<h2>@Model.Title</h2>
+@using (Html.BeginForm(Model.Action, Model.Controller, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>@Model.SubTitle</h4>
+    <hr/>
+    @Html.ValidationSummary()
+    @Html.EditorFor(n=>n.Model)
+    @Html.FormGroup().Begin()
+        @Html.SubmitButton(Model.ButtonTitle)
+    @Html.FormGroup().End()
+}

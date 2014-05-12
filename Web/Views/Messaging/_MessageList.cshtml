@@ -1,0 +1,64 @@
+﻿@using Web.HtmlHelpers
+@using Web.Models.Dto
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        Sorting:{{ sorting.column }}
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a ng-click="changeSorting('@(Html.GetPropertyName<MessageListDTO>(n => n.SendDate))')">Date</a></li>
+        <li ng-click="changeSorting('@(Html.GetPropertyName<MessageListDTO>(n => n.ReceiverName))')"><a>RecieverName</a></li>
+        <li ng-click="changeSorting('@(Html.GetPropertyName<MessageListDTO>(n => n.SenderName))')"><a>SenderName</a></li>
+        <li ng-click="changeSorting('@(Html.GetPropertyName<MessageListDTO>(n => n.Subject))')"><a>Subject</a></li>
+    </ul>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-1">
+                Date
+            </div>
+            <div class="col-md-3">
+                Subject
+            </div>
+            <div class="col-md-3">
+                Receiver
+            </div>
+            <div class="col-md-3">
+                Sender
+            </div>
+            <div class="col-md-2">
+                Actions
+            </div>
+        </div>
+    </div>
+
+    <div data-infinite-scroll='loadMore()' data-infinite-scroll-distance='2' class="panel-body without-tb-padding">
+        <div ng-repeat="message in messages">
+            <div class="row border-box-item grid-item">
+                <div class="col-md-1 cell">
+                    {{ message.SendDate }}
+                </div>
+                <div class="col-md-3 cell">
+                    <a href="" ng-click="showMessage(message.Id)">{{ message.Subject }}</a>
+                </div>
+                <div class="col-md-3 cell">
+                    {{ message.ReceiverEmail }}
+                    {{ message.RecieverName }}
+                </div>
+                <div class="col-md-3 cell">
+                    {{ message.SenderEmail }}
+                    {{ message.SenderName }}
+                </div>
+                <div class="col-md-2 cell">
+                    <button type="submit" ng-click="deleteMessage(message.Id)" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <button type="submit" ng-click="reply(message.SenderId, message.Id)" class="btn btn-primary">Reply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="btn" ng-click="loadMore()">LoadMore</div>
