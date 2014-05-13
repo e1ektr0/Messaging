@@ -2,7 +2,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Web.Mvc;
+using System.Web.Routing;
 using AutoMapper;
 using DomainEntities;
 using Repositories;
@@ -36,6 +38,8 @@ namespace Web.Controllers.Admin
         {
             throw new NotImplementedException();
         }
+
+
     }
 
     public class UserModel
@@ -63,10 +67,11 @@ namespace Web.Controllers.Admin
     public class ButtonFactory
     {
         //todo:разработать модуль строготипизированых ссылок или упередь откуданить
-        public ButtonAction DeleteButton<TController>(Expression<Func<TController, ActionResult>> action, object parameters, string title = "Удалить") where TController : Controller
+        public ButtonAction DeleteButton<TController>(Expression<Func<TController, ActionResult>> action, string title = "Удалить") where TController : Controller
         {
             var url = new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext);
-            return new ButtonAction { Title = title, Action = url.Action(action.Name, BaseController.ControllerNameByType(typeof(TController)), parameters) };
+           
+            return new ButtonAction { Title = title, Action = url.Action(action) };
         }
     }
 
@@ -81,7 +86,7 @@ namespace Web.Controllers.Admin
 
         protected override void MapToModel(IMappingExpression<MembershipUser, UserModel> map)
         {
-            map.AfterMap((entity, model) =>model.DeleteButton = _buttonFactory.DeleteButton<UsersController>(x => x.Delete(entity.Id), new {entity.Id}));
+            map.AfterMap((entity, model) => model.DeleteButton = _buttonFactory.DeleteButton<UsersController>(x => x.Delete(entity.Id)));
         }
 
         protected override void MapToEntity(IMappingExpression<UserModel, MembershipUser> map)
@@ -89,4 +94,105 @@ namespace Web.Controllers.Admin
         }
     }
 
+    public static class UrlHelperExtenion
+    {
+        public static string Action<T>(this UrlHelper url, Expression<Func<T, ActionResult>> actionSelector, RouteValueDictionary routeValues = null) where T : Controller
+        {
+            string controller;
+            string action;
+
+            routeValues = GetRouteValues(routeValues, actionSelector, out controller, out action);
+            return url.Action(action, controller, routeValues);
+        }
+
+        /// <summary>
+        /// Generates routevalues and controller and action strings from a strong typed lambda expression of a controllermethod.
+        /// </summary>
+        /// <typeparam name="T">Must be a Controller</typeparam>
+        /// <param name="routeValues">Can be null or empty, but you can supply extra routevalues these win if generated values overlap</param>
+        /// <param name="actionSelector">a lambda expression, must be a call to a ActionResult returning method</param>
+        /// <param name="controller">the name of the controller</param>
+        /// <param name="action">the name of the action</param>
+        /// <returns></returns>
+        public static RouteValueDictionary GetRouteValues<T>(
+            RouteValueDictionary routeValues,
+            Expression<Func<T, ActionResult>> actionSelector,
+            out string controller,
+            out string action)
+        {
+            var controllerType = typeof(T);
+            if (routeValues == null)
+            {
+                routeValues = new RouteValueDictionary();
+            }
+
+            //The body of the expression must be a call to a method
+            var call = actionSelector.Body as MethodCallExpression;
+            if (call == null)
+            {
+                throw new ArgumentException("You must call a method of " + controllerType.Name, "actionSelector");
+            }
+
+            //the object being called must be the controller specified in <T>
+            if (call.Object.Type != controllerType)
+            {
+                throw new ArgumentException("You must call a method of " + controllerType.Name, "actionSelector");
+            }
+
+            //Remove the controller part of the name ProductController --> Product
+            if (controllerType.Name.EndsWith("Controller"))
+            {
+                controller = controllerType.Name.Substring(0, controllerType.Name.Length - "Controller".Length);
+            }
+
+            else
+            {
+                controller = controllerType.Name;
+            }
+            //The action is the name of the method being called
+            action = call.Method.Name;
+
+            //get all arguments from the lambda expression
+            var args = call.Arguments;
+
+            //Get all parameters from the Action Method
+            ParameterInfo[] parameters = call.Method.GetParameters();
+
+            //pair the lambda arguments with the param names
+            var pairs = args.Select((a, i) => new
+                                             {
+                                                 Argument = a,
+                                                 ParamName = parameters[i].Name
+                                             });
+
+
+            foreach (var argumentParameterPair in pairs)
+            {
+                string name = argumentParameterPair.ParamName;
+                if (!routeValues.ContainsKey(name))
+                {
+                    //the argument could be a constant or a variable or a function and must be evaluated
+                    object value;
+                    //If it is a constant we can get the value immediately
+                    if (argumentParameterPair.Argument.NodeType == ExpressionType.Constant)
+                    {
+                        var constant = argumentParameterPair.Argument as ConstantExpression;
+                        value = constant.Value;
+                    }
+                    else //if not we have to evaluate the value
+                    {
+
+                        value = Expression.Lambda(argumentParameterPair.Argument).Compile().DynamicInvoke(null);
+                    }
+                    if (value != null)
+                    {
+                        //add routevalues with the name = method parameter name (productSlug) and value = the evaluated lambda value
+                        routeValues.Add(name, value);
+                    }
+                }
+            }
+
+            return routeValues;
+        }
+    }
 }
