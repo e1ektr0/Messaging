@@ -232,6 +232,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Admin\UsersController.cs" />
     <Compile Include="Controllers\Api\MessageController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -250,10 +251,12 @@
     <Compile Include="Models\Dto\MessageListDTO.cs" />
     <Compile Include="Models\QueryObjects\MessageListDTOQueryObject.cs" />
     <Compile Include="Models\Dto\UserDto.cs" />
+    <Compile Include="Models\ViewModel\Column.cs" />
     <Compile Include="Models\ViewModel\EditFormModel.cs" />
     <Compile Include="Models\ViewModel\FormModel.cs" />
     <Compile Include="Models\ViewModel\LoginViewModel.cs" />
     <Compile Include="Models\ViewModel\RegisterViewModel.cs" />
+    <Compile Include="Models\ViewModel\TablePageModel.cs" />
     <Compile Include="SignalR\BaseUserConnectionsHub.cs" />
     <Compile Include="SignalR\ConnectionMapping.cs" />
     <Compile Include="SignalR\Hubs\MessagesNotificationHub.cs" />
@@ -634,8 +637,13 @@
     <Content Include="Views\Messaging\_UsersList.cshtml" />
     <Content Include="Scripts\noty\noty.jquery.json" />
     <Content Include="Views\Home\ReadMe.cshtml" />
+    <Content Include="Views\Default\Table.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TableRow.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ButtonAction.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Users\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

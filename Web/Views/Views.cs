@@ -3,6 +3,7 @@
     public static class Default
     {
         public const string Edit = "~/Views/Default/Edit.cshtml";
+        public const string Table = "~/Views/Default/Table.cshtml";
     }
 
     public static class Messaging

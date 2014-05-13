@@ -70,4 +70,20 @@ namespace Web.HtmlHelpers
             return name.Substring(0, name.Length - "Controller".Length);
         }
     }
+
+
+
+    public static class BootstapExtension
+    {
+        //todo:разработать или упереть откудато систему хелперов для работы с бутстрапом
+        public static MvcHtmlString ButtonPrimory(this HtmlHelper model, string title, string actionLink)
+        {
+            var tag = new TagBuilder("a");
+            tag.Attributes["href"] = actionLink;
+            tag.AddCssClass("btn");
+            tag.AddCssClass("btn-primary");
+            tag.SetInnerText(title);
+            return new MvcHtmlString(tag.ToString(TagRenderMode.Normal));
+        }
+    }
 }

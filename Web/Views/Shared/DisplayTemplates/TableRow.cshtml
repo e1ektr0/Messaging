@@ -1,0 +1,7 @@
+﻿@model object
+@foreach (var prop in ViewData.ModelMetadata.Properties)
+{
+    <td>
+         @Html.Display(prop.PropertyName)
+    </td>
+}

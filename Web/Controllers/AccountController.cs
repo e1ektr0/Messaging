@@ -23,12 +23,12 @@ namespace Web.Controllers
         /// <summary>
         /// Репозиторий пользователей
         /// </summary>
-        private readonly UserRepositories _userRepositories;
+        private readonly UsersRepository _usersRepository;
 
-        public AccountController(UserService userService, UserRepositories userRepositories)
+        public AccountController(UserService userService, UsersRepository usersRepository)
         {
             _userService = userService;
-            _userRepositories = userRepositories;
+            _usersRepository = usersRepository;
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Web.Controllers
         [Authorize]
         public ActionResult Edit()
         {
-            var domaintUser = _userRepositories.GetById(User.Identity.GetUserId());
+            var domaintUser = _usersRepository.GetById(User.Identity.GetUserId());
             var model = AutoMapper.Mapper.Map<AccountEditViewModel>(domaintUser);
             return EditView(model, Edit, "Edit", "Edit an account", "Edit");
         }
@@ -87,7 +87,7 @@ namespace Web.Controllers
             
             try
             {
-                var domaintUser = _userRepositories.GetById(User.Identity.GetUserId());
+                var domaintUser = _usersRepository.GetById(User.Identity.GetUserId());
                 model.MapTo(domaintUser);
                 await _userService.Update(domaintUser);
                 return RedirectTo<AccountController>(n => n.Edit());

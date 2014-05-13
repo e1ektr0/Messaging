@@ -8,7 +8,7 @@ namespace Repositories
     /// <summary>
     /// Репозитории для пользователей
     /// </summary>
-    public class UserRepositories : IUserRepositories
+    public class UsersRepository : IUserRepositories
     {
         #region Constructor & properties
 
@@ -17,7 +17,7 @@ namespace Repositories
         /// </summary>
         private readonly IContext<MembershipUser> _context;
 
-        public UserRepositories(IContext<MembershipUser> context)
+        public UsersRepository(IContext<MembershipUser> context)
         {
             _context = context;
         }
@@ -38,6 +38,14 @@ namespace Repositories
         /// Получить список пользователей для отправки сообщений
         /// </summary>
         public IEnumerable<MembershipUser> GetUsersForSendMessage()
+        {
+            return SelectAll();
+        }
+
+        /// <summary>
+        /// Вернёт всех пользователей
+        /// </summary>
+        public IEnumerable<MembershipUser> SelectAll()
         {
             return _context.Table.ToList();
         }

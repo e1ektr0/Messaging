@@ -1,0 +1,22 @@
+﻿@model Web.Models.ViewModel.TablePageModel
+<h2>@Model.Title</h2>
+<h4>@Model.SubTitle</h4>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            @foreach (var column in Model.GetColumns())
+            {
+                <th>@column.Title</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.GetItems())
+        {
+            <tr>
+                @Html.DisplayFor(n=>item,"TableRow")
+            </tr>
+        }
+    </tbody>
+</table>

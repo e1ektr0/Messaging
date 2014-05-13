@@ -13,14 +13,14 @@ namespace Web.Controllers
         /// <summary>
         /// Ключь хранения ViewData при передаче между экшенами во время редиректа
         /// </summary>
-        private const string _viewDataKey = "ViewData";
+        private const string ViewDataKey = "ViewData";
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //Передача ViewData
-            if (TempData[_viewDataKey] != null)
+            if (TempData[ViewDataKey] != null)
             {
-                ViewData = (ViewDataDictionary)TempData[_viewDataKey];
+                ViewData = (ViewDataDictionary)TempData[ViewDataKey];
             }
             base.OnActionExecuting(filterContext);
         }
@@ -30,7 +30,7 @@ namespace Web.Controllers
         /// </summary>
         protected ActionResult EditView<TModel>(TModel model, Func<ActionResult> action, string title, string subtitle, string submitTitle)
         {
-            var editFormModel = new EditFormModel { Model = model };
+            var editFormModel = new EditBaseModel { Model = model };
             editFormModel.Title = title;
             editFormModel.SubTitle = subtitle;
             editFormModel.Action = action.Method.Name;
@@ -51,7 +51,7 @@ namespace Web.Controllers
         /// <summary>
         /// Тип контроллера
         /// </summary>
-        private string ControllerNameByType(Type type)
+        public static string ControllerNameByType(Type type)
         {
             var name = type.Name;
             return name.Substring(0, name.Length - "Controller".Length);
@@ -62,7 +62,7 @@ namespace Web.Controllers
         /// </summary>
         protected ActionResult RedirectWithState(string action, string controller)
         {
-            TempData[_viewDataKey] = ViewData;
+            TempData[ViewDataKey] = ViewData;
             return RedirectToAction(action, controller);
         }
         /// <summary>
@@ -70,7 +70,7 @@ namespace Web.Controllers
         /// </summary>
         protected ActionResult RedirectWithState(Func<ActionResult> action)
         {
-            TempData[_viewDataKey] = ViewData;
+            TempData[ViewDataKey] = ViewData;
             return RedirectToAction(action.Method.Name);
         }
         /// <summary>

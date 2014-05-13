@@ -17,9 +17,9 @@ namespace Web.Controllers.Api
         /// <summary>
         /// Репозиторий пользователей
         /// </summary>
-        private readonly UserRepositories _repositories;
+        private readonly UsersRepository _repositories;
 
-        public UserController(UserRepositories repositories)
+        public UserController(UsersRepository repositories)
         {
             _repositories = repositories;
         }

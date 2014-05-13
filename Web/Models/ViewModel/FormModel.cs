@@ -7,7 +7,7 @@ namespace Web.Models.ViewModel
     /// <summary>
     /// Модель для формы
     /// </summary>
-    public abstract class FormModel
+    public abstract class BaseModel
     {
         /// <summary>
         /// Модель для рендеринга формы

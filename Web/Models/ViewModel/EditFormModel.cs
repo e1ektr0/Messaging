@@ -6,7 +6,7 @@ namespace Web.Models.ViewModel
     /// <summary>
     /// Баовая модель для формы редактирования
     /// </summary>
-    public class EditFormModel: FormModel
+    public class EditBaseModel: BaseModel
     {
         /// <summary>
         /// Имя дествия для обработки формы
