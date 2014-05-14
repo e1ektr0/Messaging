@@ -69,6 +69,13 @@ namespace Web.HtmlHelpers
             var name = type.Name;
             return name.Substring(0, name.Length - "Controller".Length);
         }
+
+        public static MvcHtmlString If(this HtmlHelper helper, bool flg, string value)
+        {
+            if(!flg)
+                return new MvcHtmlString("");
+            return new MvcHtmlString(value);
+        }
     }
 
 

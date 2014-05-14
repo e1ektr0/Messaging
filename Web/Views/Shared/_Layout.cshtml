@@ -34,5 +34,15 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
+    <script>
+        //todo:move this shit
+        $('.pagination a').click(function () {
+            var link = $(this);
+            var page = link.data("page");
+            var input = $(link.parents('.pagination')[0]).prev();
+            $(input).val(page);
+            link.parents('form').submit();
+        });
+    </script>
 </body>
 </html>

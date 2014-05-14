@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Shared.Extensions
@@ -27,5 +29,12 @@ namespace Shared.Extensions
                 throw new Exception("Should be a property");
             return methodCallExpression.Member.Name;
         }
+
+        //todo:В отдельный файл экстеншена
+        public static bool IsNullOrEmpty<TItem>(this IEnumerable<TItem> collection)
+        {
+            return (collection == null || !collection.Any());
+        }
+
     }
 }

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\PredicateBuilder.cs" />
     <Compile Include="Extensions\SystemObject.cs" />
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="Mapper\AutoMapperHelper.cs" />

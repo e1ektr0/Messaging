@@ -1,19 +1,26 @@
-﻿@using Web.Models.ViewModel
+﻿@using Web.HtmlHelpers
+@using Web.Models.ViewModel
 @model TablePageModel
 @Html.HiddenFor(model => model.QueryObject.Skip)
 @{
     var paging = Model.GetPaing();
 }
 <ul class="pagination">
-    <li><a href="#">&laquo;</a></li>
-    @for (var i = paging.Start; i < paging.End; i++)
+    <li class="@Html.If(paging.CurrentPage == 0, "disabled")">
+        <a href="#" data-page="@(paging.SkipConvert(paging.CurrentPage - 1))">&laquo;</a>
+    </li>
+    @for (var i = paging.Start; i <= paging.End; i++)
     {
         var _class = "";
         if (paging.CurrentPage == i)
         {
             _class += "active";
         }
-        <li class="@_class"><a href="#">@(i + 1)</a></li>
+        <li class="@_class">
+            <a href="#" data-page="@paging.SkipConvert(i)">@(i + 1)</a>
+        </li>
     }
-    <li><a href="#">&raquo;</a></li>
+    <li class="@Html.If(paging.End == paging.CurrentPage, "disabled")">
+        <a href="#" data-page="@(paging.SkipConvert(paging.CurrentPage + 1))">&raquo;</a>
+    </li>
 </ul>

@@ -15,7 +15,7 @@ namespace Repositories.QueryObject
         public int PageSize { get; set; }
 
         /// <summary>
-        /// Колличество отображаемы записей
+        /// Колличество пропущеных записей
         /// </summary>
         public int Skip { get; set; }
 
@@ -64,7 +64,12 @@ namespace Repositories.QueryObject
         /// </summary>
         public IQueryable<TEntity> Query(IQueryable<TEntity> query)
         {
-            return Paging(Order(query));
+            return Paging(Order(query.Where(Filter())));
+        }
+
+        public int TotalCount(IQueryable<TEntity> query)
+        {
+            return query.Where(Filter()).Count();
         }
 
         #endregion Public Methods
@@ -95,6 +100,11 @@ namespace Repositories.QueryObject
         protected void AddOrdering<TKeySelector>(string key, Expression<Func<TEntity, TKeySelector>> orderExpression)
         {
             OrderDictionary.Add(key, new OrderObject<TEntity, TKeySelector>(orderExpression));
+        }
+
+        protected virtual Expression<Func<TEntity, bool>> Filter()
+        {
+            return arg => true;
         }
 
         #endregion Private Methods

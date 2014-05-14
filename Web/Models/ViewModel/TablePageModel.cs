@@ -41,10 +41,12 @@ namespace Web.Models.ViewModel
 
     public class Paging
     {
+        private readonly int _pageSize;
         private const int WindowsSize = 5;
 
         public Paging(int totalCount, int pageSize, int skip)
         {
+            _pageSize = pageSize;
             var totalPagesDouble = (double)totalCount / pageSize;
             var totalPage = (int)totalPagesDouble;
             if (totalPagesDouble - (int)totalPagesDouble > 0)
@@ -56,8 +58,12 @@ namespace Web.Models.ViewModel
 
             if (CurrentPage > WindowsSize)
                 Start = CurrentPage - WindowsSize / 2;
-            if (totalPage - CurrentPage < WindowsSize)
+            else
+                Start = 0;
+            if (totalPage - CurrentPage > WindowsSize)
                 End = CurrentPage + WindowsSize / 2;
+            else
+                End = totalPage;
         }
 
         public int TotalPages { get; set; }
@@ -67,6 +73,11 @@ namespace Web.Models.ViewModel
         public int End { get; set; }
 
         public int CurrentPage { get; set; }
+
+        public int SkipConvert(int page)
+        {
+            return page * _pageSize;
+        }
     }
 
     public class NotAjaxTable<TItem> : TablePageModel
