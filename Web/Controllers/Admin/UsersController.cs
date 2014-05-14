@@ -10,6 +10,7 @@ using DomainEntities;
 using Repositories;
 using Shared.Mapper;
 using Web.MapperConfigs;
+using Web.Models.QueryObjects;
 using Web.Models.ViewModel;
 
 namespace Web.Controllers.Admin
@@ -25,21 +26,26 @@ namespace Web.Controllers.Admin
 
 
         [HttpGet]
-        public ActionResult List()
+        public ActionResult List(UsersQueryObject queryObject)
         {
-            var users = _usersRepository.SelectAll();
-            var model = new NotAjaxTable<UserModel>();
+            if (queryObject == null)
+                queryObject = new UsersQueryObject();
+
+            var model = new NotAjaxTable<UserModel>(queryObject);
+            
+            var users = _usersRepository.SelectAll().ToList();
             model.PageItems = users.Select(n => n.MapTo(new UserModel())).ToList();
+            model.TotalCount = users.Count();
+
             return View(Views.Default.Table, model);
         }
 
 
+        [HttpGet]
         public ActionResult Delete(string id)
         {
             throw new NotImplementedException();
         }
-
-
     }
 
     public class UserModel
@@ -134,21 +140,13 @@ namespace Web.Controllers.Admin
             }
 
             //the object being called must be the controller specified in <T>
-            if (call.Object.Type != controllerType)
+            if (call.Object != null && call.Object.Type != controllerType)
             {
                 throw new ArgumentException("You must call a method of " + controllerType.Name, "actionSelector");
             }
 
             //Remove the controller part of the name ProductController --> Product
-            if (controllerType.Name.EndsWith("Controller"))
-            {
-                controller = controllerType.Name.Substring(0, controllerType.Name.Length - "Controller".Length);
-            }
-
-            else
-            {
-                controller = controllerType.Name;
-            }
+            controller = controllerType.Name.EndsWith("Controller") ? controllerType.Name.Substring(0, controllerType.Name.Length - "Controller".Length) : controllerType.Name;
             //The action is the name of the method being called
             action = call.Method.Name;
 
@@ -168,27 +166,25 @@ namespace Web.Controllers.Admin
 
             foreach (var argumentParameterPair in pairs)
             {
-                string name = argumentParameterPair.ParamName;
-                if (!routeValues.ContainsKey(name))
-                {
-                    //the argument could be a constant or a variable or a function and must be evaluated
-                    object value;
-                    //If it is a constant we can get the value immediately
-                    if (argumentParameterPair.Argument.NodeType == ExpressionType.Constant)
-                    {
-                        var constant = argumentParameterPair.Argument as ConstantExpression;
-                        value = constant.Value;
-                    }
-                    else //if not we have to evaluate the value
-                    {
+                var name = argumentParameterPair.ParamName;
 
-                        value = Expression.Lambda(argumentParameterPair.Argument).Compile().DynamicInvoke(null);
-                    }
-                    if (value != null)
-                    {
-                        //add routevalues with the name = method parameter name (productSlug) and value = the evaluated lambda value
-                        routeValues.Add(name, value);
-                    }
+                if (routeValues.ContainsKey(name)) continue;
+                //the argument could be a constant or a variable or a function and must be evaluated
+                object value;
+                //If it is a constant we can get the value immediately
+                if (argumentParameterPair.Argument.NodeType == ExpressionType.Constant)
+                {
+                    var constant = argumentParameterPair.Argument as ConstantExpression;
+                    value = constant??new object();
+                }
+                else 
+                {
+
+                    value = Expression.Lambda(argumentParameterPair.Argument).Compile().DynamicInvoke(null);
+                }
+                if (value != null)
+                {
+                    routeValues.Add(name, value);
                 }
             }
 

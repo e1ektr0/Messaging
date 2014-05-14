@@ -1,0 +1,19 @@
+﻿@using Web.Models.ViewModel
+@model TablePageModel
+@Html.HiddenFor(model => model.QueryObject.Skip)
+@{
+    var paging = Model.GetPaing();
+}
+<ul class="pagination">
+    <li><a href="#">&laquo;</a></li>
+    @for (var i = paging.Start; i < paging.End; i++)
+    {
+        var _class = "";
+        if (paging.CurrentPage == i)
+        {
+            _class += "active";
+        }
+        <li class="@_class"><a href="#">@(i + 1)</a></li>
+    }
+    <li><a href="#">&raquo;</a></li>
+</ul>

@@ -2,21 +2,35 @@
 <h2>@Model.Title</h2>
 <h4>@Model.SubTitle</h4>
 <hr />
-<table class="table">
-    <thead>
-        <tr>
-            @foreach (var column in Model.GetColumns())
-            {
-                <th>@column.Title</th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.GetItems())
-        {
+@using (Html.BeginForm(ViewContext.RouteData.Values["action"] as string, ViewContext.RouteData.Values["controller"] as string, FormMethod.Get))
+{
+    var columns = Model.GetColumns().ToList();
+    @Html.EditorFor(n => n.QueryObject.Search)
+    <table class="table">
+        <thead>
             <tr>
-                @Html.DisplayFor(n=>item,"TableRow")
+                @foreach (var column in columns)
+                {
+                    <th>@column.Title</th>
+                }
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="@columns.Count()">
+                    @Html.HiddenFor(model => model.QueryObject.Count)
+                    @Html.EditorFor(model => model, "Paging")
+                </td>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (var item in Model.GetItems())
+            {
+                <tr>
+                    @Html.DisplayFor(n => item, "TableRow")
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}

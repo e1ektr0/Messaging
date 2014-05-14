@@ -19,6 +19,11 @@ namespace Web.Models.QueryObjects
             AddOrdering(messageListDTO.GetPropertyName(n => n.SenderName), n=>n.Sender.FirstName);
             AddOrdering(messageListDTO.GetPropertyName(n => n.Subject), n=>n.Subject);
         }
+    }
+
+
+    public class UsersQueryObject : QueryObject<MembershipUser>
+    {
 
     }
 }

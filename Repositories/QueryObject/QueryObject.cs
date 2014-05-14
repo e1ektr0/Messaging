@@ -5,15 +5,15 @@ using System.Linq.Expressions;
 
 namespace Repositories.QueryObject
 {
-    /// <summary>
-    /// Базовый объект запроса
-    /// Хранит информацию о пейдженге, сортировке
-    /// todo:По мере необходимости добавить информацию о поиске
-    /// </summary>
-    public abstract class QueryObject<TEntity>
+    public abstract class QueryObjectBase
     {
-        #region Properties
-        
+        protected QueryObjectBase()
+        {
+            PageSize = 2;
+        }
+
+        public int PageSize { get; set; }
+
         /// <summary>
         /// Колличество отображаемы записей
         /// </summary>
@@ -28,6 +28,20 @@ namespace Repositories.QueryObject
         /// Ключ колонки по которой осуществляется сортировка
         /// </summary>
         public string SortingColumn { get; set; }
+
+        public List<ColumnConditional> SearchCoditionals { get; set; }
+
+        public string Search { get; set; }
+    }
+
+    /// <summary>
+    /// Базовый объект запроса
+    /// Хранит информацию о пейдженге, сортировке
+    /// todo:По мере необходимости добавить информацию о поиске
+    /// </summary>
+    public abstract class QueryObject<TEntity> : QueryObjectBase
+    {
+        #region Properties
 
         /// <summary>
         /// Направление сортировки
@@ -84,5 +98,12 @@ namespace Repositories.QueryObject
         }
 
         #endregion Private Methods
+    }
+
+
+    public class ColumnConditional
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
     }
 }

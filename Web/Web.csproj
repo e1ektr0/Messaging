@@ -640,6 +640,7 @@
     <Content Include="Views\Default\Table.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TableRow.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ButtonAction.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Paging.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Users\" />
