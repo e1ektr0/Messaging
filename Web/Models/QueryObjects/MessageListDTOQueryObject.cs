@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using DomainEntities;
 using Repositories.QueryObject;
@@ -11,10 +12,28 @@ namespace Web.Models.QueryObjects
 
     public abstract class ModelQueryObject<TModel, TEntity> : QueryObject<TEntity> where TModel : new()
     {
-        public void AddOrdering<TKeySelector>(Expression<Func<TModel, object>> keyExpression,
+        protected void AddOrdering<TKeySelector>(Expression<Func<TModel, object>> keyExpression,
             Expression<Func<TEntity, TKeySelector>> orderExpression)
         {
-            AddOrdering(new TModel().GetPropertyName(keyExpression), orderExpression);
+            AddOrdering(GetPropertyKey(keyExpression), orderExpression);
+        }
+
+        protected bool HasConditional(Expression<Func<TModel, object>> keyExpression)
+        {
+            if (SearchCoditionals == null)
+                return false;
+            return SearchCoditionals.Any(n => n.Key == GetPropertyKey(keyExpression) && !n.Value.IsNullOrEmpty());
+        }
+
+        protected string GetConditional(Expression<Func<TModel, object>> keyExpression)
+        {
+            return SearchCoditionals.First(n => n.Key == GetPropertyKey(keyExpression)).Value;
+        }
+
+
+        private static string GetPropertyKey(Expression<Func<TModel, object>> keyExpression)
+        {
+            return new TModel().GetPropertyName(keyExpression);
         }
     }
 
@@ -36,17 +55,45 @@ namespace Web.Models.QueryObjects
 
     public class UsersQueryObject : ModelQueryObject<UserModel, MembershipUser>
     {
+        public UsersQueryObject()
+        {
+            AddOrdering(n => n.Id, n => n.Id);
+            AddOrdering(n => n.FirstName, n => n.FirstName);
+            AddOrdering(n => n.LastName, n => n.LastName);
+        }
+
         protected override Expression<Func<MembershipUser, bool>> Filter()
         {
             var filter = base.Filter();
+
             if (!Search.IsNullOrEmpty())
             {
-                filter.And(n => n.Id.Contains(Search));
-                filter.And(n => n.FirstName.Contains(Search));
-                filter.And(n => n.LastName.Contains(Search));
+                Expression<Func<MembershipUser, bool>> searchExpression = arg => false;
+                searchExpression.Or(n => n.Id.Contains(Search));
+                searchExpression.Or(n => n.FirstName.Contains(Search));
+                searchExpression.Or(n => n.LastName.Contains(Search));
+            }
+
+            if (HasConditional(model=>model.Id))
+            {
+                var conditional = GetConditional(model=>model.Id);
+                filter.And(entity=>entity.Id.Contains(conditional));
+            }
+
+            if (HasConditional(model => model.FirstName))
+            {
+                var conditional = GetConditional(model => model.FirstName);
+                filter.And(entity => entity.FirstName.Contains(conditional));
+            }
+
+            if (HasConditional(model => model.LastName))
+            {
+                var conditional = GetConditional(model => model.LastName);
+                filter.And(enityt => enityt.LastName.Contains(conditional));
             }
 
             return filter;
         }
+
     }
 }
