@@ -17,7 +17,7 @@
         </thead>
         <tfoot>
             <tr>
-                <td colspan="@columns.Count()">
+                <td colspan="@(columns.Count())">
                     @Html.HiddenFor(model => model.QueryObject.Count)
                     @Html.EditorFor(model => model, "Paging")
                 </td>
@@ -31,6 +31,5 @@
                 </tr>
             }
         </tbody>
-
     </table>
 }
