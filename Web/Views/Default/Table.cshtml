@@ -25,7 +25,7 @@
                     @for (var i = 0; i < columns.Count; i++)
                     {
                         <th>
-                            @Html.HiddenFor(n => n.QueryObject.SearchCoditionals[i].Key, columns[i].Key)
+                            @Html.HiddenFor(n => n.QueryObject.SearchCoditionals[i].Key, new { @Value = columns[i].Key })
                             @if (columns[i].IsFiltered)
                             {
                                 @Html.EditorFor(n => n.QueryObject.SearchCoditionals[i].Value, new { placeholder = columns[i].Title })
