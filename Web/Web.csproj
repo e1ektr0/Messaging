@@ -622,7 +622,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Object.cshtml" />
+    <Content Include="Views\Shared\Object.cshtml" />
     <Content Include="Views\Default\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
@@ -640,7 +640,7 @@
     <Content Include="Views\Default\Table.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TableRow.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ButtonAction.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Paging.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Paging.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Users\" />

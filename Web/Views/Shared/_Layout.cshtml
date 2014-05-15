@@ -43,6 +43,12 @@
             $(input).val(page);
             link.parents('form').submit();
         });
+        $('.submitonenter').keydown(function (event) {
+            if (event.keyCode == 13) {
+                 this.form.submit(); 
+            }
+            return true;
+        });
     </script>
 </body>
 </html>

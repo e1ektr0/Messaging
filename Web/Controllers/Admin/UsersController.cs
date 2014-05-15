@@ -34,9 +34,8 @@ namespace Web.Controllers.Admin
 
             model.PageItems = _queryExecutor.Fecth<UserModel>(queryObject).ToList();
             model.TotalCount = _queryExecutor.Count(queryObject);
-            //model.FilterAll();
-            model.Filter(n=>n.Id);
-            model.GlobalSearch = false;
+            model.FilterAll();
+            model.Filter(userModel=>userModel.Id);
             return View(Views.Default.Table, model);
         }
 

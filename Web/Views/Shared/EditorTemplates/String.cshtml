@@ -1,2 +1,2 @@
 ﻿@model string
-@Html.TextBoxFor(model => model, new { @class = "form-control", placeholder=ViewData["placeholder"] })
+@Html.TextBoxFor(model => model, new { @class = "form-control " + ViewData["class"], placeholder = ViewData["placeholder"] })

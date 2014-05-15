@@ -7,17 +7,17 @@
 @using (Html.BeginForm(ViewContext.RouteData.Values["action"] as string, ViewContext.RouteData.Values["controller"] as string, FormMethod.Get))
 {
     var columns = Model.GetColumns().ToList();
+    
+    //Поиск по всем
     if (Model.GlobalSearch)
     {
         <div class="col-md-offset-9">
-            @Html.EditorFor(n => n.QueryObject.Search, new { placeholder = "Search" })
+            @Html.EditorFor(n => n.QueryObject.Search, new { placeholder = "Search", @class = "submitonenter" })
         </div>
     }
 
-    //todo:Унести в шаблон для таблиц
     <table class="table">
         <thead>
-
             @*Фильтр по колонкам*@
             @if (columns.Any(n => n.IsFiltered))
             {
@@ -28,7 +28,7 @@
                             @Html.HiddenFor(n => n.QueryObject.SearchCoditionals[i].Key, new { @Value = columns[i].Key })
                             @if (columns[i].IsFiltered)
                             {
-                                @Html.EditorFor(n => n.QueryObject.SearchCoditionals[i].Value, new { placeholder = columns[i].Title })
+                                @Html.EditorFor(n => n.QueryObject.SearchCoditionals[i].Value, new { placeholder = columns[i].Title, @class = "submitonenter" })
                             }
                         </th>
                     }
@@ -43,14 +43,13 @@
                 }
             </tr>
         </thead>
-
         @*Пейджинг*@
         @if (Model.GetPaing().TotalPages > 1)
         {
             <tfoot>
                 <tr>
                     <td colspan="@(columns.Count())">
-                        @Html.EditorFor(model => model, "Paging")
+                        @Html.DisplayFor(model => model, "Paging")
                     </td>
                 </tr>
             </tfoot>
@@ -76,6 +75,5 @@
                 }
             }
         </tbody>
-
     </table>
 }
