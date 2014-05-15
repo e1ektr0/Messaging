@@ -40,7 +40,7 @@ namespace Web.Models.QueryObjects
     /// <summary>
     /// Объект запроса для сообщений
     /// </summary>
-    public class MessageListDTOQueryObject : ModelQueryObject<MessageListDTO,Message>
+    public class MessageListDTOQueryObject : ModelQueryObject<MessageListDTO, Message>
     {
         public MessageListDTOQueryObject()
         {
@@ -69,27 +69,28 @@ namespace Web.Models.QueryObjects
             if (!Search.IsNullOrEmpty())
             {
                 Expression<Func<MembershipUser, bool>> searchExpression = arg => false;
-                searchExpression.Or(n => n.Id.Contains(Search));
-                searchExpression.Or(n => n.FirstName.Contains(Search));
-                searchExpression.Or(n => n.LastName.Contains(Search));
+                searchExpression = searchExpression.Or(n => n.Id.Contains(Search));
+                searchExpression = searchExpression.Or(n => n.FirstName.Contains(Search));
+                searchExpression = searchExpression.Or(n => n.LastName.Contains(Search));
+                filter = filter.And(searchExpression);
             }
 
-            if (HasConditional(model=>model.Id))
+            if (HasConditional(model => model.Id))
             {
-                var conditional = GetConditional(model=>model.Id);
-                filter.And(entity=>entity.Id.Contains(conditional));
+                var conditional = GetConditional(model => model.Id);
+                filter = filter.And(entity => entity.Id.Contains(conditional));
             }
 
             if (HasConditional(model => model.FirstName))
             {
                 var conditional = GetConditional(model => model.FirstName);
-                filter.And(entity => entity.FirstName.Contains(conditional));
+                filter = filter.And(entity => entity.FirstName.Contains(conditional));
             }
 
             if (HasConditional(model => model.LastName))
             {
                 var conditional = GetConditional(model => model.LastName);
-                filter.And(enityt => enityt.LastName.Contains(conditional));
+                filter = filter.And(enityt => enityt.LastName.Contains(conditional));
             }
 
             return filter;

@@ -9,10 +9,8 @@ namespace Repositories.QueryObject
     {
         protected QueryObjectBase()
         {
-            PageSize = 2;
+            Count = 2;
         }
-
-        public int PageSize { get; set; }
 
         /// <summary>
         /// Колличество пропущеных записей
@@ -81,6 +79,8 @@ namespace Repositories.QueryObject
         /// </summary>
         private IQueryable<TEntity> Order(IQueryable<TEntity> query)
         {
+            if (SortingColumn == null)
+                SortingColumn = OrderDictionary.First().Key;
             if (SortingDirection == SortingDirection.Asc)
                 return OrderDictionary[SortingColumn].Order(query);
             return OrderDictionary[SortingColumn].OrderDesc(query);

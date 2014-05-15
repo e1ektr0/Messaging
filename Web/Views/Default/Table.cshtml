@@ -2,12 +2,40 @@
 <h2>@Model.Title</h2>
 <h4>@Model.SubTitle</h4>
 <hr />
+
+
 @using (Html.BeginForm(ViewContext.RouteData.Values["action"] as string, ViewContext.RouteData.Values["controller"] as string, FormMethod.Get))
 {
     var columns = Model.GetColumns().ToList();
-    @Html.EditorFor(n => n.QueryObject.Search)
+    if (Model.GlobalSearch)
+    {
+        <div class="col-md-offset-9">
+            @Html.EditorFor(n => n.QueryObject.Search, new { placeholder = "Search" })
+        </div>
+    }
+
+    //todo:Унести в шаблон для таблиц
     <table class="table">
         <thead>
+
+            @*Фильтр по колонкам*@
+            @if (columns.Any(n => n.IsFiltered))
+            {
+                <tr>
+                    @for (var i = 0; i < columns.Count; i++)
+                    {
+                        <th>
+                            @Html.HiddenFor(n => n.QueryObject.SearchCoditionals[i].Key, columns[i].Key)
+                            @if (columns[i].IsFiltered)
+                            {
+                                @Html.EditorFor(n => n.QueryObject.SearchCoditionals[i].Value, new { placeholder = columns[i].Title })
+                            }
+                        </th>
+                    }
+                </tr>
+            }
+
+            @*Заголовки колонок*@
             <tr>
                 @foreach (var column in columns)
                 {
@@ -15,21 +43,39 @@
                 }
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <td colspan="@(columns.Count())">
-                    @Html.HiddenFor(model => model.QueryObject.Count)
-                    @Html.EditorFor(model => model, "Paging")
-                </td>
-            </tr>
-        </tfoot>
+
+        @*Пейджинг*@
+        @if (Model.GetPaing().TotalPages > 1)
+        {
+            <tfoot>
+                <tr>
+                    <td colspan="@(columns.Count())">
+                        @Html.EditorFor(model => model, "Paging")
+                    </td>
+                </tr>
+            </tfoot>
+        }
+
+        @*Записи*@
         <tbody>
-            @foreach (var item in Model.GetItems())
+            @if (!Model.GetItems().Any())
             {
                 <tr>
-                    @Html.DisplayFor(n => item, "TableRow")
+                    <td colspan="@(columns.Count())">
+                        no result
+                    </td>
                 </tr>
             }
+            else
+            {
+                foreach (var item in Model.GetItems())
+                {
+                    <tr>
+                        @Html.DisplayFor(n => item, "TableRow")
+                    </tr>
+                }
+            }
         </tbody>
+
     </table>
 }

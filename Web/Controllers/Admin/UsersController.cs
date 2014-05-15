@@ -8,7 +8,6 @@ using System.Web.Routing;
 using AutoMapper;
 using DomainEntities;
 using Repositories;
-using Shared.Mapper;
 using Web.MapperConfigs;
 using Web.Models.QueryObjects;
 using Web.Models.ViewModel;
@@ -17,11 +16,11 @@ namespace Web.Controllers.Admin
 {
     public class UsersController : BaseController
     {
-        private readonly UsersRepository _usersRepository;
+        private readonly QueryExecutor<MembershipUser> _queryExecutor;
 
-        public UsersController(UsersRepository usersRepository)
+        public UsersController(QueryExecutor<MembershipUser> queryExecutor)
         {
-            _usersRepository = usersRepository;
+            _queryExecutor = queryExecutor;
         }
 
 
@@ -32,11 +31,12 @@ namespace Web.Controllers.Admin
                 queryObject = new UsersQueryObject();
 
             var model = new NotAjaxTable<UserModel>(queryObject);
-            
-            var users = _usersRepository.SelectAll().ToList();
-            model.PageItems = users.Select(n => n.MapTo(new UserModel())).ToList();
-            model.TotalCount = users.Count();
 
+            model.PageItems = _queryExecutor.Fecth<UserModel>(queryObject).ToList();
+            model.TotalCount = _queryExecutor.Count(queryObject);
+            //model.FilterAll();
+            model.Filter(n=>n.Id);
+            model.GlobalSearch = false;
             return View(Views.Default.Table, model);
         }
 
