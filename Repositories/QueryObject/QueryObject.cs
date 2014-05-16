@@ -2,46 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Shared.Extensions;
 
 namespace Repositories.QueryObject
 {
-    public abstract class QueryObjectBase
-    {
-        protected QueryObjectBase()
-        {
-            Count = 2;
-        }
-
-        /// <summary>
-        /// Колличество пропущеных записей
-        /// </summary>
-        public int Skip { get; set; }
-
-        /// <summary>
-        /// Колличество запрошенных записей
-        /// </summary>
-        public int Count { get; set; }
-
-        /// <summary>
-        /// Ключ колонки по которой осуществляется сортировка
-        /// </summary>
-        public string SortingColumn { get; set; }
-
-        /// <summary>
-        /// Направление сортировки
-        /// </summary>
-        public SortingDirection SortingDirection { get; set; }
-
-        public List<ColumnConditional> SearchCoditionals { get; set; }
-
-        public string Search { get; set; }
-    }
-
     /// <summary>
     /// Базовый объект запроса
     /// Хранит информацию о пейдженге, сортировке
-    /// todo:По мере необходимости добавить информацию о поиске
     /// </summary>
     public abstract class QueryObject<TEntity> : QueryObjectBase
     {
@@ -116,41 +82,5 @@ namespace Repositories.QueryObject
         }
 
         #endregion Private Methods
-    }
-
-    public class Conditional<TEntity>
-    {
-        private Expression<Func<TEntity, bool>> _expression;
-        public Conditional(bool @default)
-        {
-            _expression = n => @default;
-        }
-
-        public void And(Expression<Func<TEntity, bool>> expression)
-        {
-            _expression = _expression.And(expression);
-        }
-        public void And(Conditional<TEntity> conditional)
-        {
-            _expression = _expression.And(conditional.GetExpression());
-        }
-
-        public Expression<Func<TEntity, bool>> GetExpression()
-        {
-            return _expression;
-        }
-
-        public void Or(Expression<Func<TEntity, bool>> expression)
-        {
-            _expression = _expression.Or(expression);
-        }
-
-
-    }
-
-    public class ColumnConditional
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
     }
 }

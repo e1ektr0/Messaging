@@ -232,6 +232,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\Button\ButtonAction.cs" />
+    <Compile Include="Models\Button\ButtonFactory.cs" />
+    <Compile Include="Models\Button\ButtonTypes.cs" />
+    <Compile Include="Models\QueryObjects\UsersQueryObject.cs" />
+    <Compile Include="Models\ViewModel\User\UserModel.cs" />
+    <Compile Include="Models\ViewModel\User\UserModelMapperConfig.cs" />
     <Compile Include="Controllers\Admin\UsersController.cs" />
     <Compile Include="Controllers\Api\MessageController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
@@ -247,16 +253,16 @@
     <Compile Include="MapperConfigs\MessageListDTOMapperConfig.cs" />
     <Compile Include="MapperConfigs\RegisterViewModelMapperConfig.cs" />
     <Compile Include="MapperConfigs\MembershipUserMapperConfig.cs" />
-    <Compile Include="Models\Dto\MessageDTO.cs" />
-    <Compile Include="Models\Dto\MessageListDTO.cs" />
+    <Compile Include="Models\Messaging\MessageDTO.cs" />
+    <Compile Include="Models\Messaging\MessageListDTO.cs" />
     <Compile Include="Models\QueryObjects\MessageListDTOQueryObject.cs" />
-    <Compile Include="Models\Dto\UserDto.cs" />
-    <Compile Include="Models\ViewModel\Column.cs" />
-    <Compile Include="Models\ViewModel\EditFormModel.cs" />
-    <Compile Include="Models\ViewModel\FormModel.cs" />
-    <Compile Include="Models\ViewModel\LoginViewModel.cs" />
-    <Compile Include="Models\ViewModel\RegisterViewModel.cs" />
-    <Compile Include="Models\ViewModel\TablePageModel.cs" />
+    <Compile Include="Models\Messaging\UserDto.cs" />
+    <Compile Include="Models\ViewModel\Tables\Column.cs" />
+    <Compile Include="Models\ViewModel\Form\EditFormModel.cs" />
+    <Compile Include="Models\ViewModel\Form\FormModel.cs" />
+    <Compile Include="Models\ViewModel\Accaunt\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModel\Accaunt\RegisterViewModel.cs" />
+    <Compile Include="Models\ViewModel\Tables\TablePageModel.cs" />
     <Compile Include="SignalR\BaseUserConnectionsHub.cs" />
     <Compile Include="SignalR\ConnectionMapping.cs" />
     <Compile Include="SignalR\Hubs\MessagesNotificationHub.cs" />
@@ -265,7 +271,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewModel\AccountEditViewModel.cs" />
+    <Compile Include="Models\ViewModel\Accaunt\AccountEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
