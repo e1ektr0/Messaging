@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Shared.Extensions;
 
 namespace Repositories.QueryObject
 {
@@ -62,12 +63,12 @@ namespace Repositories.QueryObject
         /// </summary>
         public IQueryable<TEntity> Query(IQueryable<TEntity> query)
         {
-            return Paging(Order(query.Where(Filter())));
+            return Paging(Order(query.Where(Filter().GetExpression())));
         }
 
         public int TotalCount(IQueryable<TEntity> query)
         {
-            return query.Where(Filter()).Count();
+            return query.Where(Filter().GetExpression()).Count();
         }
 
         #endregion Public Methods
@@ -109,14 +110,43 @@ namespace Repositories.QueryObject
             OrderDictionary.Add(key, new OrderObject<TEntity, TKeySelector>(orderExpression));
         }
 
-        protected virtual Expression<Func<TEntity, bool>> Filter()
+        protected virtual Conditional<TEntity> Filter()
         {
-            return arg => true;
+            return new Conditional<TEntity>(true);
         }
 
         #endregion Private Methods
     }
 
+    public class Conditional<TEntity>
+    {
+        private Expression<Func<TEntity, bool>> _expression;
+        public Conditional(bool @default)
+        {
+            _expression = n => @default;
+        }
+
+        public void And(Expression<Func<TEntity, bool>> expression)
+        {
+            _expression = _expression.And(expression);
+        }
+        public void And(Conditional<TEntity> conditional)
+        {
+            _expression = _expression.And(conditional.GetExpression());
+        }
+
+        public Expression<Func<TEntity, bool>> GetExpression()
+        {
+            return _expression;
+        }
+
+        public void Or(Expression<Func<TEntity, bool>> expression)
+        {
+            _expression = _expression.Or(expression);
+        }
+
+
+    }
 
     public class ColumnConditional
     {
