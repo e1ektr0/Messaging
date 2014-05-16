@@ -2,8 +2,14 @@
 
 namespace Web
 {
+    /// <summary>
+    /// Бандел конфиг
+    /// </summary>
     public class BundleConfig
     {
+        /// <summary>
+        /// Регистрируем скрипты
+        /// </summary>
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery")

@@ -67,7 +67,7 @@
     <Compile Include="IBaseRepository.cs" />
     <Compile Include="IMessagesRepository.cs" />
     <Compile Include="IUserRepositories.cs" />
-    <Compile Include="QueryExecutor.cs" />
+    <Compile Include="QueryObject\QueryExecutor.cs" />
     <Compile Include="QueryObject\ColumnConditional.cs" />
     <Compile Include="QueryObject\Conditional.cs" />
     <Compile Include="QueryObject\IOrderObject.cs" />
@@ -95,6 +95,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -55,7 +55,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
     // TODO :: make the prefixes more granular
     /*>>prefixes*/
-    // List of property values to set for css tests. See ticket #21
+    // Main of property values to set for css tests. See ticket #21
     prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
     /*>>prefixes*/
 

@@ -1,6 +1,5 @@
 ﻿@using Repositories.QueryObject
-@using Web.HtmlHelpers
-@model Web.Models.ViewModel.TablePageModel
+@model Web.Models.ViewModel.Tables.TablePageModel
 <h2>@Model.Title</h2>
 <h4>@Model.SubTitle</h4>
 <hr />
@@ -10,7 +9,7 @@
     var columns = Model.GetColumns().ToList();
 
     //Поиск по всем
-    if (Model.GlobalSearch)
+    if (Model.IsGlobalSearch)
     {
         <div class="col-md-offset-9">
             @Html.EditorFor(n => n.QueryObject.Search, new { placeholder = "Search", @class = "submitonenter" })

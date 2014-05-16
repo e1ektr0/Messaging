@@ -15,6 +15,9 @@ namespace Web.Controllers
         /// </summary>
         private const string ViewDataKey = "ViewData";
 
+        /// <summary>
+        /// Перегрузка для пердачи вьюстейта если это требуется
+        /// </summary>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //Передача ViewData

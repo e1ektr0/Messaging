@@ -28,6 +28,9 @@ namespace Web.Controllers.Api
         /// </summary>
         private readonly MessagesRepository _messagesRepository;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public MessageController(MessageService messageService, MessagesRepository messagesRepository)
         {
             _messageService = messageService;

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using DomainEntities;
 using Shared.Extensions;
 
 namespace Repositories.QueryObject
@@ -24,7 +25,6 @@ namespace Repositories.QueryObject
         {
             return SearchCoditionals.First(n => n.Key == GetPropertyKey(keyExpression)).Value;
         }
-
 
         private static string GetPropertyKey(Expression<Func<TModel, object>> keyExpression)
         {

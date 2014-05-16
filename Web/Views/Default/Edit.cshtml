@@ -8,6 +8,7 @@
     <hr/>
     @Html.ValidationSummary()
     @Html.EditorFor(n=>n.Model)
+    <br/>
     @Html.FormGroup().Begin()
         @Html.SubmitButton(Model.ButtonTitle)
     @Html.FormGroup().End()

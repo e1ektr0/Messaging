@@ -1,6 +1,6 @@
 ﻿@using Web.HtmlHelpers
 @using Web.Models.ViewModel
-@model TablePageModel
+@model Web.Models.ViewModel.Tables.TablePageModel
 @Html.HiddenFor(model => model.QueryObject.Skip)
 @{
     var paging = Model.GetPaing();

@@ -5,8 +5,14 @@ using System.Web.Routing;
 
 namespace Web
 {
+    /// <summary>
+    /// Класс приложения asp mvc
+    /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
+        /// <summary>
+        /// Конфигурирует запускк проекта
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

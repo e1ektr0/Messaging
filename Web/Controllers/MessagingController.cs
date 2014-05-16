@@ -13,7 +13,7 @@ namespace Web.Controllers
         /// </summary>
         public ActionResult Index()
         {
-            return View(Views.Messaging.List);
+            return View(Views.Messaging.Main);
         }
 
         /// <summary>

@@ -1,12 +1,18 @@
 ﻿using AutoMapper;
 using DomainEntities;
-using Web.Models;
-using Web.Models.ViewModel;
+using Shared.Mapper;
+using Web.Models.ViewModel.Accaunt;
 
 namespace Web.MapperConfigs
 {
+    /// <summary>
+    /// Мапер формы регистрации
+    /// </summary>
     public class RegisterViewModelMapperConfig : EntityModelBaseMapConfig<RegisterViewModel, MembershipUser>
     {
+        /// <summary>
+        /// Карта для маппинга из сущности бд
+        /// </summary>
         protected override void MapToModel(IMappingExpression<RegisterViewModel, MembershipUser> map)
         {
             map.ForAllMembers(n => n.Ignore());
@@ -16,6 +22,9 @@ namespace Web.MapperConfigs
             map.ForMember(n => n.PhoneNumber, e => e.MapFrom(u => u.Phone));
         }
 
+        /// <summary>
+        /// Карта для маппинга в сущности бд
+        /// </summary>
         protected override void MapToEntity(IMappingExpression<MembershipUser, RegisterViewModel> map)
         {
             map.ForAllMembers(n => n.Ignore());

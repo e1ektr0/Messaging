@@ -1,32 +1,62 @@
 ﻿using DomainEntities;
 using Repositories.QueryObject;
 using Shared.Extensions;
-using Web.Controllers.Admin;
+using Web.Models.ViewModel.User;
 
 namespace Web.Models.QueryObjects
 {
-    public class UsersQueryObject : ModelQueryObject<UserModel, MembershipUser>
+    /// <summary>
+    /// Описание связываниея модели строки с запросом в базу данных
+    /// </summary>
+    public class UsersQueryObject : ModelQueryObject<UserRowModel, MembershipUser>
     {
+        /// <summary>
+        /// Конструктор
+        /// Инициализация сортировки
+        /// </summary>
         public UsersQueryObject()
         {
-            AddOrdering(n => n.Id, n => n.Id);
-            AddOrdering(n => n.FirstName, n => n.FirstName);
-            AddOrdering(n => n.LastName, n => n.LastName);
+            //Описываем сортировку
+            AddOrdering(model => model.Id, entity => entity.Id);
+            AddOrdering(model => model.FirstName, entity => entity.FirstName);
+            AddOrdering(model => model.LastName, entity => entity.LastName);
         }
 
+        /// <summary>
+        /// Генерирует ограничение на запрос(опираясь на обхект запроса)
+        /// </summary>
         protected override Conditional<MembershipUser> Filter()
         {
             var filter = new Conditional<MembershipUser>(true);
 
-            if (!Search.IsNullOrEmpty())
-            {
-                var searchCondition = new Conditional<MembershipUser>(false);
-                searchCondition.Or(n => n.Id.Contains(Search));
-                searchCondition.Or(n => n.FirstName.Contains(Search));
-                searchCondition.Or(n => n.LastName.Contains(Search));
-                filter.And(searchCondition);
-            }
+            //Глобальный поиск
+            GlobalConditional(filter);
 
+            //Описываем ограничения по колонкам
+            ColumnConditional(filter);
+            return filter;
+        }
+
+        /// <summary>
+        /// Описывает ограничения для поиска по всем колонкам
+        /// </summary>
+        private void GlobalConditional(Conditional<MembershipUser> filter)
+        {
+            if (Search.IsNullOrEmpty()) 
+                return;
+
+            var searchCondition = new Conditional<MembershipUser>(false);
+            searchCondition.Or(n => n.Id.Contains(Search));
+            searchCondition.Or(n => n.FirstName.Contains(Search));
+            searchCondition.Or(n => n.LastName.Contains(Search));
+            filter.And(searchCondition);
+        }
+
+        /// <summary>
+        /// Описываем ограничения по колонкам
+        /// </summary>
+        private void ColumnConditional(Conditional<MembershipUser> filter)
+        {
             if (HasConditional(model => model.Id))
             {
                 var conditional = GetConditional(model => model.Id);
@@ -44,7 +74,7 @@ namespace Web.Models.QueryObjects
                 var conditional = GetConditional(model => model.LastName);
                 filter.And(enityt => enityt.LastName.Contains(conditional));
             }
-            return filter;
         }
+
     }
 }

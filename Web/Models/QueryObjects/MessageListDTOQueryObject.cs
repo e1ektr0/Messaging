@@ -9,6 +9,9 @@ namespace Web.Models.QueryObjects
     /// </summary>
     public class MessageListDTOQueryObject : ModelQueryObject<MessageListDTO, Message>
     {
+        /// <summary>
+        /// Конструктор - описывает сортировку
+        /// </summary>
         public MessageListDTOQueryObject()
         {
             //Связываем поля dto объекта с правилами сортировки

@@ -6,7 +6,7 @@ namespace DomainEntities
     /// <summary>
     /// Сообщение
     /// </summary>
-    public class Message : IKeyEntity<int>
+    public class Message : IKeyEntity
     {
         #region Properties
 

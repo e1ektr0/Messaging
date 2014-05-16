@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{01A6DAB7-8AD0-42B5-8A2C-8475204A1BF1}"
 	ProjectSection(SolutionItems) = preProject
@@ -41,44 +41,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicesUnitTest", "ServicesUnitTest\ServicesUnitTest.csproj", "{DEA84AB5-B2FC-4434-A822-2DB7EDB40692}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 9
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://gres.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Web\\Web.csproj
-		SccProjectTopLevelParentUniqueName1 = Messaging.sln
-		SccProjectName1 = Web
-		SccLocalPath1 = Web
-		SccProjectUniqueName2 = DomainEntities\\DomainEntities.csproj
-		SccProjectTopLevelParentUniqueName2 = Messaging.sln
-		SccProjectName2 = DomainEntities
-		SccLocalPath2 = DomainEntities
-		SccProjectUniqueName3 = DataBaseConnection\\DataBaseModel.csproj
-		SccProjectTopLevelParentUniqueName3 = Messaging.sln
-		SccProjectName3 = DataBaseConnection
-		SccLocalPath3 = DataBaseConnection
-		SccProjectUniqueName4 = Repositories\\Repositories.csproj
-		SccProjectTopLevelParentUniqueName4 = Messaging.sln
-		SccProjectName4 = Repositories
-		SccLocalPath4 = Repositories
-		SccProjectUniqueName5 = SharedStrings\\SharedStrings.csproj
-		SccProjectTopLevelParentUniqueName5 = Messaging.sln
-		SccProjectName5 = SharedStrings
-		SccLocalPath5 = SharedStrings
-		SccProjectUniqueName6 = Services\\Services.csproj
-		SccProjectTopLevelParentUniqueName6 = Messaging.sln
-		SccProjectName6 = Services
-		SccLocalPath6 = Services
-		SccProjectUniqueName7 = Shared\\Shared.csproj
-		SccProjectTopLevelParentUniqueName7 = Messaging.sln
-		SccProjectName7 = Shared
-		SccLocalPath7 = Shared
-		SccProjectUniqueName8 = ServicesUnitTest\\ServicesUnitTest.csproj
-		SccProjectTopLevelParentUniqueName8 = Messaging.sln
-		SccProjectName8 = ServicesUnitTest
-		SccLocalPath8 = ServicesUnitTest
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -121,13 +83,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E9BC8A6A-D7AD-4FEA-88DD-BFC3031ED027} = {4FB630CC-4A18-46FD-89EA-AB3132830CCA}
-		{ABC7D32F-150C-49B3-AD9C-DFE39D4690E1} = {4FB630CC-4A18-46FD-89EA-AB3132830CCA}
+		{0BE9B603-53F4-42F1-8FA9-77D17D09CE6D} = {0BAC5058-F5B8-44D2-8AAA-A07C8BE57C64}
 		{DACBAAA5-39F8-4F2F-9367-05610262A6BB} = {CEDB539E-A037-4BF1-83EC-7070D846AB91}
 		{0E2B8338-729E-4C1C-BB15-07B8F2992F32} = {E1E900E9-35FF-4D1B-BEAD-814316D6DB07}
 		{D8301742-889E-4EDB-BCBF-7E4475F2148B} = {E1E900E9-35FF-4D1B-BEAD-814316D6DB07}
+		{E9BC8A6A-D7AD-4FEA-88DD-BFC3031ED027} = {4FB630CC-4A18-46FD-89EA-AB3132830CCA}
 		{A5377660-1607-4E04-9B87-020B2A2CF530} = {E1E900E9-35FF-4D1B-BEAD-814316D6DB07}
+		{ABC7D32F-150C-49B3-AD9C-DFE39D4690E1} = {4FB630CC-4A18-46FD-89EA-AB3132830CCA}
 		{DEA84AB5-B2FC-4434-A822-2DB7EDB40692} = {E1E900E9-35FF-4D1B-BEAD-814316D6DB07}
-		{0BE9B603-53F4-42F1-8FA9-77D17D09CE6D} = {0BAC5058-F5B8-44D2-8AAA-A07C8BE57C64}
 	EndGlobalSection
 EndGlobal

@@ -7,6 +7,7 @@ using Services.Entities;
 using Shared.Exceptions;
 using Shared.Mapper;
 using Web.Models.ViewModel;
+using Web.Models.ViewModel.Accaunt;
 
 namespace Web.Controllers
 {
@@ -25,6 +26,9 @@ namespace Web.Controllers
         /// </summary>
         private readonly UsersRepository _usersRepository;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public AccountController(UserService userService, UsersRepository usersRepository)
         {
             _userService = userService;

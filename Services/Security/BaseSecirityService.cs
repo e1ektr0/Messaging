@@ -10,7 +10,7 @@ namespace Services.Security
     /// <typeparam name="TSecurityObject">Объект безопасности</typeparam>
     /// <typeparam name="TAction">Тип действий безопасности</typeparam>
     /// <typeparam name="TKey">Тип ключа объекта</typeparam>
-    public abstract class BaseSecirityService<TSecurityObject, TAction, TKey> : ISecurityService<TSecurityObject, TAction> where TSecurityObject : IKeyEntity<TKey>
+    public abstract class BaseSecirityService<TSecurityObject, TAction, TKey> : ISecurityService<TSecurityObject, TAction> where TSecurityObject : IKeyEntity
     {
         private readonly IRepository<TSecurityObject, TKey> _repository;
 

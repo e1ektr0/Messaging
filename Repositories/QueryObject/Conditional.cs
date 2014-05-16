@@ -30,7 +30,5 @@ namespace Repositories.QueryObject
         {
             _expression = _expression.Or(expression);
         }
-
-
     }
 }

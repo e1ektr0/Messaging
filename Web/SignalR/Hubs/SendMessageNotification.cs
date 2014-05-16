@@ -12,6 +12,9 @@ namespace Web.SignalR.Hubs
     /// </summary>
     public class SendMessageNotification : ISendMessageNotification
     {
+        /// <summary>
+        /// Уведомить о сообщении
+        /// </summary>
         public void Noty(Message message)
         {
             //Контекст хаба уведомителя

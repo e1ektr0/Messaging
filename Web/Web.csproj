@@ -36,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Web.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -232,13 +233,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Models\Button\ButtonAction.cs" />
+    <Compile Include="HtmlHelpers\BootstapExtension.cs" />
+    <Compile Include="Models\Button\ButtonActionModel.cs" />
     <Compile Include="Models\Button\ButtonFactory.cs" />
     <Compile Include="Models\Button\ButtonTypes.cs" />
     <Compile Include="Models\QueryObjects\UsersQueryObject.cs" />
-    <Compile Include="Models\ViewModel\User\UserModel.cs" />
+    <Compile Include="Models\ViewModel\Tables\NotAjaxTable.cs" />
+    <Compile Include="Models\ViewModel\Tables\Paging.cs" />
+    <Compile Include="Models\ViewModel\User\UserRowModel.cs" />
     <Compile Include="Models\ViewModel\User\UserModelMapperConfig.cs" />
-    <Compile Include="Controllers\Admin\UsersController.cs" />
+    <Compile Include="Controllers\Admin\AdminUsersController.cs" />
     <Compile Include="Controllers\Api\MessageController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -247,12 +251,11 @@
     <Compile Include="Controllers\MessagingController.cs" />
     <Compile Include="HtmlHelpers\FormGroup.cs" />
     <Compile Include="HtmlHelpers\HtmlExtension.cs" />
-    <Compile Include="MapperConfigs\AccountEditViewModelMapperConfig.cs" />
-    <Compile Include="MapperConfigs\EntityModelBaseMapConfig.cs" />
-    <Compile Include="MapperConfigs\MessageDTOMapperConfig.cs" />
-    <Compile Include="MapperConfigs\MessageListDTOMapperConfig.cs" />
-    <Compile Include="MapperConfigs\RegisterViewModelMapperConfig.cs" />
-    <Compile Include="MapperConfigs\MembershipUserMapperConfig.cs" />
+    <Compile Include="Models\ViewModel\Accaunt\AccountEditViewModelMapperConfig.cs" />
+    <Compile Include="Models\Messaging\MessageDTOMapperConfig.cs" />
+    <Compile Include="Models\Messaging\MessageListDTOMapperConfig.cs" />
+    <Compile Include="Models\ViewModel\Accaunt\RegisterViewModelMapperConfig.cs" />
+    <Compile Include="Models\Messaging\UserDtoMapperConfig.cs" />
     <Compile Include="Models\Messaging\MessageDTO.cs" />
     <Compile Include="Models\Messaging\MessageListDTO.cs" />
     <Compile Include="Models\QueryObjects\MessageListDTOQueryObject.cs" />
@@ -649,7 +652,7 @@
     <Content Include="Views\Shared\DisplayTemplates\Paging.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Users\" />
+    <Folder Include="Views\AdminUsers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -2,8 +2,14 @@ using System.Collections.Generic;
 
 namespace Repositories.QueryObject
 {
+    /// <summary>
+    /// Описывает состояние навигации, пейджинг, сортировку, фильтрацию
+    /// </summary>
     public abstract class QueryObjectBase
     {
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         protected QueryObjectBase()
         {
             Count = 2;
@@ -29,8 +35,14 @@ namespace Repositories.QueryObject
         /// </summary>
         public SortingDirection SortingDirection { get; set; }
 
+        /// <summary>
+        /// Список ограничений по колонкам
+        /// </summary>
         public List<ColumnConditional> SearchCoditionals { get; set; }
 
+        /// <summary>
+        /// Глобальный поиск
+        /// </summary>
         public string Search { get; set; }
     }
 }

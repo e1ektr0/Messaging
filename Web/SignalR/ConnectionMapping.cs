@@ -10,6 +10,9 @@ namespace Web.SignalR
     {
         private readonly Dictionary<T, HashSet<string>> _connections = new Dictionary<T, HashSet<string>>();
 
+        /// <summary>
+        /// Обзее колличесво соединений
+        /// </summary>
         public int Count
         {
             get
@@ -18,6 +21,9 @@ namespace Web.SignalR
             }
         }
 
+        /// <summary>
+        /// Добавить соединение пользователя
+        /// </summary>
         public void Add(T key, string connectionId)
         {
             lock (_connections)
@@ -36,6 +42,9 @@ namespace Web.SignalR
             }
         }
 
+        /// <summary>
+        /// Вернёт список соединений пользователя
+        /// </summary>
         public IEnumerable<string> GetConnections(T key)
         {
             HashSet<string> connections;
@@ -47,6 +56,9 @@ namespace Web.SignalR
             return Enumerable.Empty<string>();
         }
 
+        /// <summary>
+        /// Удаляет соединение пользователя из словаря
+        /// </summary>
         public void Remove(T key, string connectionId)
         {
             lock (_connections)

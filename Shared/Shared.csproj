@@ -93,6 +93,7 @@
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="Mapper\AutoMapperHelper.cs" />
     <Compile Include="Exceptions\BaseException.cs" />
+    <Compile Include="Mapper\EntityModelBaseMapConfig.cs" />
     <Compile Include="Mapper\IMapConfig.cs" />
     <Compile Include="NullPrincipal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

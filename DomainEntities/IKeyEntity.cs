@@ -1,6 +1,6 @@
 ﻿namespace DomainEntities
 {
-    public interface IKeyEntity<TKey>
+    public interface IKeyEntity
     {
     }
 }

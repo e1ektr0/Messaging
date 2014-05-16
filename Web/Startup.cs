@@ -6,6 +6,9 @@ namespace Web
 {
     public partial class Startup
     {
+        /// <summary>
+        /// Финвигурирует что то..todo:понять что
+        /// </summary>
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);

@@ -76,6 +76,9 @@ namespace Repositories.QueryObject
             OrderDictionary.Add(key, new OrderObject<TEntity, TKeySelector>(orderExpression));
         }
 
+        /// <summary>
+        /// Генерирует ограничение на запрос(опираясь на обхект запроса)
+        /// </summary>
         protected virtual Conditional<TEntity> Filter()
         {
             return new Conditional<TEntity>(true);

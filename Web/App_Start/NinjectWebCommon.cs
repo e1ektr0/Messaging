@@ -26,6 +26,9 @@ namespace Web.App_Start
     using Ninject;
     using Ninject.Web.Common;
 
+    /// <summary>
+    /// Инициализирует ninject инфраструктуру
+    /// </summary>
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper Bootstrapper = new Bootstrapper();

@@ -1,24 +1,39 @@
 using AutoMapper;
 using DomainEntities;
+using Shared.Mapper;
+using Web.Controllers.Admin;
 using Web.MapperConfigs;
+using Web.Models.Button;
 
-namespace Web.Controllers.Admin
+namespace Web.Models.ViewModel.User
 {
-    public class UserModelMapperConfig : EntityModelBaseMapConfig<MembershipUser, UserModel>
+    /// <summary>
+    /// Маппер для элемента в списке пользователей
+    /// </summary>
+    public class UserModelMapperConfig : EntityModelBaseMapConfig<MembershipUser, UserRowModel>
     {
         private readonly ButtonFactory _buttonFactory;
 
+        /// <summary>
+        /// Конструктор маппера
+        /// </summary>
         public UserModelMapperConfig(ButtonFactory buttonFactory)
         {
             _buttonFactory = buttonFactory;
         }
 
-        protected override void MapToModel(IMappingExpression<MembershipUser, UserModel> map)
+        /// <summary>
+        /// Карта для маппинга из сущности бд
+        /// </summary>
+        protected override void MapToModel(IMappingExpression<MembershipUser, UserRowModel> map)
         {
-            map.AfterMap((entity, model) => model.DeleteButton = _buttonFactory.DeleteButton<UsersController>(x => x.Delete(entity.Id)));
+            map.AfterMap((entity, model) => model.DeleteButton = _buttonFactory.DeleteButton<AdminUsersController>(x => x.Delete(entity.Id)));
         }
 
-        protected override void MapToEntity(IMappingExpression<UserModel, MembershipUser> map)
+        /// <summary>
+        /// Карта для маппинга в сущности бд
+        /// </summary>
+        protected override void MapToEntity(IMappingExpression<UserRowModel, MembershipUser> map)
         {
         }
     }

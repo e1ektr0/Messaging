@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * jQuery JavaScript Library v1.10.2
  * http://jquery.com/
  *
@@ -44,7 +44,7 @@ var
 	// [[Class]] -> type pairs
 	class2type = {},
 
-	// List of deleted data cache ids, so we can reuse them
+	// Main of deleted data cache ids, so we can reuse them
 	core_deletedIds = [],
 
 	core_version = "1.10.2",
@@ -11423,7 +11423,7 @@ function setupModuleLoader(window) {
            * @ngdoc property
            * @name angular.Module#requires
            * @module ng
-           * @returns {Array.<string>} List of module names which must be loaded before this module.
+           * @returns {Array.<string>} Main of module names which must be loaded before this module.
            * @description
            * Holds the list of modules which the injector will load before the current module is
            * loaded.
@@ -27379,7 +27379,7 @@ var requiredDirective = function() {
          }
        </script>
        <form name="myForm" ng-controller="Ctrl">
-         List: <input name="namesInput" ng-model="names" ng-list required>
+         Main: <input name="namesInput" ng-model="names" ng-list required>
          <span class="error" ng-show="myForm.namesInput.$error.required">
            Required!</span>
          <br>
@@ -32244,7 +32244,7 @@ angular.scenario.ObjectModel.prototype.getSpec = function(id) {
  *
  * @param {string} id Id of the spec
  * @param {string} name Name of the spec
- * @param {Array<string>=} definitionNames List of all describe block names that wrap this spec
+ * @param {Array<string>=} definitionNames Main of all describe block names that wrap this spec
  */
 angular.scenario.ObjectModel.Spec = function(id, name, definitionNames) {
   this.id = id;
@@ -32930,9 +32930,9 @@ angular.scenario.dsl('input', function() {
 
 /**
  * Usage:
- *    repeater('#products table', 'Product List').count() number of rows
- *    repeater('#products table', 'Product List').row(1) all bindings in row as an array
- *    repeater('#products table', 'Product List').column('product.name') all values across all rows
+ *    repeater('#products table', 'Product Main').count() number of rows
+ *    repeater('#products table', 'Product Main').row(1) all bindings in row as an array
+ *    repeater('#products table', 'Product Main').column('product.name') all values across all rows
  *    in an array
  */
 angular.scenario.dsl('repeater', function() {

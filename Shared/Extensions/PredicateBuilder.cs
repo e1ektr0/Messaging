@@ -15,12 +15,13 @@ namespace Shared.Extensions
         /// <returns>A new Expression.</returns>
         public static Expression<Func<T, bool>> And<T>(this IEnumerable<Expression<Func<T, bool>>> expressions)
         {
-            if (expressions.IsNullOrEmpty())
+            var enumerable = expressions as Expression<Func<T, bool>>[] ?? expressions.ToArray();
+            if (enumerable.IsNullOrEmpty())
                 return null;
 
-            Expression<Func<T, bool>> finalExpression = expressions.First();
+            Expression<Func<T, bool>> finalExpression = enumerable.First();
 
-            foreach (Expression<Func<T, bool>> e in expressions.Skip(1))
+            foreach (Expression<Func<T, bool>> e in enumerable.Skip(1))
                 finalExpression = finalExpression.And(e);
 
             return finalExpression;
@@ -32,15 +33,13 @@ namespace Shared.Extensions
         /// <returns>A new Expression.</returns>
         public static Expression<Func<T, bool>> Or<T>(this IEnumerable<Expression<Func<T, bool>>> expressions)
         {
-            if (expressions.IsNullOrEmpty())
+            var enumerable = expressions as Expression<Func<T, bool>>[] ?? expressions.ToArray();
+            if (enumerable.IsNullOrEmpty())
                 return null;
 
-            Expression<Func<T, bool>> finalExpression = expressions.First();
+            var finalExpression = enumerable.First();
 
-            foreach (Expression<Func<T, bool>> e in expressions.Skip(1))
-                finalExpression = finalExpression.Or(e);
-
-            return finalExpression;
+            return enumerable.Skip(1).Aggregate(finalExpression, (current, e) => current.Or(e));
         }
 
         /// <summary>Ands the Expression with the provided Expression.</summary>
@@ -131,7 +130,7 @@ namespace Shared.Extensions
             }
         }
 
-        public static Expression<Func<T, bool>> BuildContainsExpression<T, R>(Expression<Func<T, R>> valueSelector, IEnumerable<R> values)
+        public static Expression<Func<T, bool>> BuildContainsExpression<T, TR>(Expression<Func<T, TR>> valueSelector, IEnumerable<TR> values)
         {
             if (null == valueSelector)
                 throw new ArgumentNullException("valueSelector");
@@ -139,33 +138,32 @@ namespace Shared.Extensions
             if (null == values)
                 throw new ArgumentNullException("values");
 
-            ParameterExpression parameterExpression = valueSelector.Parameters.Single();
-            IEnumerable<BinaryExpression> equalExpressions = null;
-            Expression aggregationExpression = null;
+            var parameterExpression = valueSelector.Parameters.Single();
+            Expression aggregationExpression;
 
-            if (!values.IsNullOrEmpty())
+            var enumerable = values as TR[] ?? values.ToArray();
+            if (!enumerable.IsNullOrEmpty())
                 return (e => false);
 
-            equalExpressions = values.Select(v => Expression.Equal(valueSelector.Body, Expression.Constant(v, typeof(R))));
+            var equalExpressions = enumerable.Select(v => Expression.Equal(valueSelector.Body, Expression.Constant(v, typeof(TR))));
             aggregationExpression = equalExpressions.Aggregate<Expression>(Expression.Or);
 
             return Expression.Lambda<Func<T, bool>>(aggregationExpression, parameterExpression);
         }
 
-        public static Expression<Func<T, bool>> BuildDoesNotContainExpression<T, R>(Expression<Func<T, R>> valueSelector, IEnumerable<R> values)
+        public static Expression<Func<T, bool>> BuildDoesNotContainExpression<T, TR>(Expression<Func<T, TR>> valueSelector, IEnumerable<TR> values)
         {
             if (null == valueSelector)
                 throw new ArgumentNullException("valueSelector");
 
-            ParameterExpression parameterExpression = valueSelector.Parameters.Single();
-            IEnumerable<BinaryExpression> notEqualExpressions = null;
-            Expression aggregationExpression = null;
+            var parameterExpression = valueSelector.Parameters.Single();
 
-            if (!values.IsNullOrEmpty())
+            var enumerable = values as TR[] ?? values.ToArray();
+            if (!enumerable.IsNullOrEmpty())
                 return (e => false);
 
-            notEqualExpressions = values.Select(v => Expression.NotEqual(valueSelector.Body, Expression.Constant(v, typeof(R))));
-            aggregationExpression = notEqualExpressions.Aggregate<Expression>(Expression.And);
+            var notEqualExpressions = enumerable.Select(v => Expression.NotEqual(valueSelector.Body, Expression.Constant(v, typeof(TR))));
+            var aggregationExpression = notEqualExpressions.Aggregate<Expression>(Expression.And);
 
             return Expression.Lambda<Func<T, bool>>(aggregationExpression, parameterExpression);
         }

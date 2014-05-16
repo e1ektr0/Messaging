@@ -6,6 +6,7 @@ using Services.Security;
 using Services.Security.SecurityActions;
 using Shared.Mapper;
 using Web.Models.Dto;
+using Web.Models.Messaging;
 
 namespace Web.Controllers.Api
 {
@@ -19,6 +20,10 @@ namespace Web.Controllers.Api
         /// </summary>
         private readonly UsersRepository _repositories;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="repositories"></param>
         public UserController(UsersRepository repositories)
         {
             _repositories = repositories;

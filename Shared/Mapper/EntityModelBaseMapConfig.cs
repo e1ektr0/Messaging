@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Shared.Mapper;
 
-namespace Web.MapperConfigs
+namespace Shared.Mapper
 {
     /// <summary>
     /// Базовая сущность для конфига авто мапера, создаёт карты автомапера
@@ -12,12 +11,12 @@ namespace Web.MapperConfigs
     {
         private static IMappingExpression<TModel, TEntity> ToDestinationMap()
         {
-            return Mapper.CreateMap<TModel, TEntity>();
+            return AutoMapper.Mapper.CreateMap<TModel, TEntity>();
         }
 
         private static IMappingExpression<TEntity, TModel> ToSourseMap()
         {
-            return Mapper.CreateMap<TEntity, TModel>();
+            return AutoMapper.Mapper.CreateMap<TEntity, TModel>();
         }
 
 
@@ -31,11 +30,17 @@ namespace Web.MapperConfigs
         /// </summary>
         protected abstract void MapToEntity(IMappingExpression<TModel, TEntity> map);
 
+        /// <summary>
+        /// Генерирует карту для исходной сущности
+        /// </summary>
         public virtual void ConfigMapToSourse()
         {
             MapToModel(ToSourseMap());
         }
 
+        /// <summary>
+        /// Генерирует карту для конечной сущности
+        /// </summary>
         public virtual void ConfigMapToDestination()
         {
             MapToEntity(ToDestinationMap());

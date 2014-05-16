@@ -5,7 +5,7 @@ namespace DomainEntities
     /// <summary>
     /// Пользователь
     /// </summary>
-    public class MembershipUser : IdentityUser, IKeyEntity<string>
+    public class MembershipUser : IdentityUser, IKeyEntity
     {
         #region Properties
 

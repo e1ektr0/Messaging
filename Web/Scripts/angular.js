@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license AngularJS v1.2.16
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
@@ -1631,7 +1631,7 @@ function setupModuleLoader(window) {
            * @ngdoc property
            * @name angular.Module#requires
            * @module ng
-           * @returns {Array.<string>} List of module names which must be loaded before this module.
+           * @returns {Array.<string>} Main of module names which must be loaded before this module.
            * @description
            * Holds the list of modules which the injector will load before the current module is
            * loaded.
@@ -17587,7 +17587,7 @@ var requiredDirective = function() {
          }
        </script>
        <form name="myForm" ng-controller="Ctrl">
-         List: <input name="namesInput" ng-model="names" ng-list required>
+         Main: <input name="namesInput" ng-model="names" ng-list required>
          <span class="error" ng-show="myForm.namesInput.$error.required">
            Required!</span>
          <br>
