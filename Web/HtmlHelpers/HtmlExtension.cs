@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Shared.Extensions;
 
 namespace Web.HtmlHelpers
 {
@@ -70,10 +71,10 @@ namespace Web.HtmlHelpers
             return name.Substring(0, name.Length - "Controller".Length);
         }
 
-        public static MvcHtmlString If(this HtmlHelper helper, bool flg, string value)
+        public static MvcHtmlString If(this HtmlHelper helper, bool flg, string value, string elseValue = "")
         {
             if(!flg)
-                return new MvcHtmlString("");
+                return new MvcHtmlString(elseValue);
             return new MvcHtmlString(value);
         }
     }
@@ -83,14 +84,25 @@ namespace Web.HtmlHelpers
     public static class BootstapExtension
     {
         //todo:разработать или упереть откудато систему хелперов для работы с бутстрапом
-        public static MvcHtmlString ButtonPrimory(this HtmlHelper model, string title, string actionLink)
+        public static MvcHtmlString ButtonPrimory(this HtmlHelper model, string title, string actionLink, string iconName)
         {
             var tag = new TagBuilder("a");
             tag.Attributes["href"] = actionLink;
             tag.AddCssClass("btn");
             tag.AddCssClass("btn-primary");
-            tag.SetInnerText(title);
+            if (!iconName.IsNullOrEmpty())
+            {
+                title = CreateIcon(iconName).ToString(TagRenderMode.Normal) +" "+ title;
+            }
+            tag.InnerHtml=title;
             return new MvcHtmlString(tag.ToString(TagRenderMode.Normal));
+        }
+
+        private static TagBuilder CreateIcon(string iconName)
+        {
+            var spanIcon = new TagBuilder("span");
+            spanIcon.AddCssClass("glyphicon glyphicon-" + iconName);
+            return spanIcon;
         }
     }
 }

@@ -35,6 +35,5 @@ namespace Shared.Extensions
         {
             return (collection == null || !collection.Any());
         }
-
     }
 }

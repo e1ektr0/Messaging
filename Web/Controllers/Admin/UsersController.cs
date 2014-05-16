@@ -63,10 +63,17 @@ namespace Web.Controllers.Admin
 
     }
 
+    public enum ButtonTypes
+    {
+        [Description("trash")]
+        Trash
+    }
+
     public class ButtonAction
     {
         public string Title { get; set; }
         public string Action { get; set; }
+        public ButtonTypes? Type { get; set; }
     }
 
     public class ButtonFactory
@@ -75,8 +82,8 @@ namespace Web.Controllers.Admin
         public ButtonAction DeleteButton<TController>(Expression<Func<TController, ActionResult>> action, string title = "Удалить") where TController : Controller
         {
             var url = new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext);
-           
-            return new ButtonAction { Title = title, Action = url.Action(action) };
+
+            return new ButtonAction { Title = title, Action = url.Action(action), Type = ButtonTypes.Trash };
         }
     }
 

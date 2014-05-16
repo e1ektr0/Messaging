@@ -1,13 +1,14 @@
-﻿@model Web.Models.ViewModel.TablePageModel
+﻿@using Repositories.QueryObject
+@using Web.HtmlHelpers
+@model Web.Models.ViewModel.TablePageModel
 <h2>@Model.Title</h2>
 <h4>@Model.SubTitle</h4>
 <hr />
 
-
 @using (Html.BeginForm(ViewContext.RouteData.Values["action"] as string, ViewContext.RouteData.Values["controller"] as string, FormMethod.Get))
 {
     var columns = Model.GetColumns().ToList();
-    
+
     //Поиск по всем
     if (Model.GlobalSearch)
     {
@@ -16,7 +17,10 @@
         </div>
     }
 
-    <table class="table">
+
+    @Html.HiddenFor(model => model.QueryObject.SortingColumn)
+    @Html.HiddenFor(model => model.QueryObject.SortingDirection)
+    <table class="table tablesorting">
         <thead>
             @*Фильтр по колонкам*@
             @if (columns.Any(n => n.IsFiltered))
@@ -24,22 +28,31 @@
                 <tr>
                     @for (var i = 0; i < columns.Count; i++)
                     {
-                        <th>
+                        <td>
                             @Html.HiddenFor(n => n.QueryObject.SearchCoditionals[i].Key, new { @Value = columns[i].Key })
                             @if (columns[i].IsFiltered)
                             {
                                 @Html.EditorFor(n => n.QueryObject.SearchCoditionals[i].Value, new { placeholder = columns[i].Title, @class = "submitonenter" })
                             }
-                        </th>
+                        </td>
                     }
                 </tr>
             }
 
             @*Заголовки колонок*@
             <tr>
+
                 @foreach (var column in columns)
                 {
-                    <th>@column.Title</th>
+                    var sotingClass = "";
+                    if (column.Key == Model.QueryObject.SortingColumn && Model.QueryObject.SortingDirection != SortingDirection.None)
+                    {
+                        sotingClass = "glyphicon ";
+                        sotingClass += Model.QueryObject.SortingDirection == SortingDirection.Asc ? "glyphicon-chevron-up" : "glyphicon-chevron-down";
+                    }
+                    <th data-key="@column.Key">
+                        @column.Title <span class="@sotingClass"></span>
+                    </th>
                 }
             </tr>
         </thead>

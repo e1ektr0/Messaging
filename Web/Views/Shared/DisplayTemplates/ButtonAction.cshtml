@@ -1,3 +1,4 @@
-﻿@using Web.HtmlHelpers
+﻿@using Shared.Extensions
+@using Web.HtmlHelpers
 @model Web.Controllers.Admin.ButtonAction
-@Html.ButtonPrimory(Model.Title, Model.Action)
+@Html.ButtonPrimory(Model.Title, Model.Action, Model.Type.GetDescription())

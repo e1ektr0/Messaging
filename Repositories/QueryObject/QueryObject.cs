@@ -27,6 +27,11 @@ namespace Repositories.QueryObject
         /// </summary>
         public string SortingColumn { get; set; }
 
+        /// <summary>
+        /// Направление сортировки
+        /// </summary>
+        public SortingDirection SortingDirection { get; set; }
+
         public List<ColumnConditional> SearchCoditionals { get; set; }
 
         public string Search { get; set; }
@@ -40,11 +45,6 @@ namespace Repositories.QueryObject
     public abstract class QueryObject<TEntity> : QueryObjectBase
     {
         #region Properties
-
-        /// <summary>
-        /// Направление сортировки
-        /// </summary>
-        public SortingDirection SortingDirection { get; set; }
 
         /// <summary>
         /// Словарь связываения ключа сортировки с объектом сортровки
@@ -79,11 +79,18 @@ namespace Repositories.QueryObject
         /// </summary>
         private IQueryable<TEntity> Order(IQueryable<TEntity> query)
         {
-            if (SortingColumn == null)
+            if (SortingColumn == null || !OrderDictionary.ContainsKey(SortingColumn))
+            {
+                SortingDirection = SortingDirection.None;
+            }
+
+            if (SortingColumn == null || !OrderDictionary.ContainsKey(SortingColumn))
                 SortingColumn = OrderDictionary.First().Key;
-            if (SortingDirection == SortingDirection.Asc)
-                return OrderDictionary[SortingColumn].Order(query);
-            return OrderDictionary[SortingColumn].OrderDesc(query);
+
+            var orderObject = OrderDictionary[SortingColumn];
+            if (SortingDirection != SortingDirection.Desc)
+                return orderObject.Order(query);
+            return orderObject.OrderDesc(query);
         }
 
         /// <summary>

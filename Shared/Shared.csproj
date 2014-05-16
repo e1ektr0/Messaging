@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\PredicateBuilder.cs" />
     <Compile Include="Extensions\SystemObject.cs" />
     <Compile Include="IoC\IoC.cs" />

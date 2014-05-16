@@ -33,22 +33,45 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", false)
     <script>
         //todo:move this shit
-        $('.pagination a').click(function () {
+        $('.pagination a').click(function() {
             var link = $(this);
             var page = link.data("page");
             var input = $(link.parents('.pagination')[0]).prev();
             $(input).val(page);
             link.parents('form').submit();
         });
-        $('.submitonenter').keydown(function (event) {
+
+        $('.submitonenter').keydown(function(event) {
             if (event.keyCode == 13) {
-                 this.form.submit(); 
+                this.form.submit();
             }
             return true;
         });
+
+        $('.tablesorting thead tr th').click(function () {
+            var columnKey = $(this).data('key');
+            var sortingDirectionInput = $($(this).parents('table').prev());
+            var sortingColumnInput = $(sortingDirectionInput.prev());
+
+            if (sortingColumnInput.val() != columnKey) {
+                sortingDirectionInput.val('Asc');
+            } else {
+                if (sortingDirectionInput.val() != 'Asc')
+                    sortingDirectionInput.val('Asc');
+                else
+                    sortingDirectionInput.val('Desc');
+            }
+            sortingColumnInput.val(columnKey);
+            $(this).parents('form')[0].submit();
+        });
     </script>
+    <style>
+        .tablesorting thead tr th {
+            cursor: pointer;
+        }
+    </style>
 </body>
 </html>
