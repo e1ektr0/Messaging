@@ -2,7 +2,6 @@ using AutoMapper;
 using DomainEntities;
 using Shared.Mapper;
 using Web.Controllers.Admin;
-using Web.MapperConfigs;
 using Web.Models.Button;
 
 namespace Web.Models.ViewModel.User

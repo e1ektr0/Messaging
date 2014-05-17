@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DomainEntities;
 using Shared.Mapper;
-using Web.MapperConfigs;
 
 namespace Web.Models.Messaging
 {

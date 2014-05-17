@@ -3,7 +3,7 @@ using DomainEntities;
 using Shared.Mapper;
 using Web.Models.Dto;
 
-namespace Web.MapperConfigs
+namespace Web.Models.Messaging
 {
     /// <summary>
     /// Маппер сообщений в dto 

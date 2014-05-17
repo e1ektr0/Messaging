@@ -5,7 +5,6 @@ using Repositories;
 using Services.Security;
 using Services.Security.SecurityActions;
 using Shared.Mapper;
-using Web.Models.Dto;
 using Web.Models.Messaging;
 
 namespace Web.Controllers.Api
@@ -23,7 +22,6 @@ namespace Web.Controllers.Api
         /// <summary>
         /// Конструктор
         /// </summary>
-        /// <param name="repositories"></param>
         public UserController(UsersRepository repositories)
         {
             _repositories = repositories;
@@ -32,7 +30,6 @@ namespace Web.Controllers.Api
         /// <summary>
         /// Получить всех пользователей
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [SecurityObject(typeof(MembershipUser), DefaultSecurityActions.GetList)]
         public IEnumerable<UserDto> Get()

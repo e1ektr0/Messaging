@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using DomainEntities;
 using Shared.Mapper;
-using Web.Models.ViewModel.Accaunt;
 
-namespace Web.MapperConfigs
+namespace Web.Models.ViewModel.Accaunt
 {
     /// <summary>
     /// Мапер формы регистрации

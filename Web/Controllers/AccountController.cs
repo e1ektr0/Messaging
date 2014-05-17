@@ -6,7 +6,6 @@ using Repositories;
 using Services.Entities;
 using Shared.Exceptions;
 using Shared.Mapper;
-using Web.Models.ViewModel;
 using Web.Models.ViewModel.Accaunt;
 
 namespace Web.Controllers
